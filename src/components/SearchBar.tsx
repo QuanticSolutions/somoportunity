@@ -9,8 +9,8 @@ export default function SearchBar() {
   const [remote, setRemote] = useState(false);
 
   return (
-    <section className="py-20 md:py-28">
-      <div className="container">
+    <section className="py-20 md:py-28 hero-gradient">
+      <div className="container bg-primary-foreground/90 rounded-xl backdrop-blur-sm py-5">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-extrabold tracking-tight text-foreground md:text-4xl">
             Find Your <span className="text-gradient">Opportunity</span>
