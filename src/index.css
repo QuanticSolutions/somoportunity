@@ -38,18 +38,18 @@
     --radius: 0.75rem;
 
     /* Gradient tokens */
-    --hero-gradient: linear-gradient(135deg, hsl(222 47% 11%) 0%, hsl(221 60% 22%) 40%, hsl(221 83% 40%) 100%);
-    --gradient-primary: linear-gradient(135deg, hsl(221 83% 53%), hsl(217 91% 60%));
-    --gradient-button: linear-gradient(135deg, hsl(221 83% 53%), hsl(210 100% 55%));
-    --gradient-counter: linear-gradient(135deg, hsl(221 83% 53%), hsl(221 60% 35%));
-    --gradient-glow: radial-gradient(ellipse at center, hsl(221 83% 53% / 0.15), transparent 70%);
+    --hero-gradient: linear-gradient(135deg, hsl(222 47% 11%) 0%, hsl(212 60% 22%) 40%, hsl(212 76% 40%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(212 76% 54%), hsl(212 76% 64%));
+    --gradient-button: linear-gradient(135deg, hsl(212 76% 54%), hsl(212 80% 62%));
+    --gradient-counter: linear-gradient(135deg, hsl(212 76% 54%), hsl(212 60% 38%));
+    --gradient-glow: radial-gradient(ellipse at center, hsl(212 76% 54% / 0.15), transparent 70%);
     --gradient-glass: linear-gradient(135deg, hsl(0 0% 100% / 0.8), hsl(0 0% 100% / 0.4));
 
     /* Shadow tokens */
     --card-shadow: 0 4px 24px -4px hsl(222 47% 11% / 0.06);
-    --card-shadow-hover: 0 12px 32px -8px hsl(221 83% 53% / 0.18);
-    --search-shadow: 0 8px 32px -8px hsl(221 83% 53% / 0.1);
-    --glow-shadow: 0 0 40px -10px hsl(221 83% 53% / 0.3);
+    --card-shadow-hover: 0 12px 32px -8px hsl(212 76% 54% / 0.18);
+    --search-shadow: 0 8px 32px -8px hsl(212 76% 54% / 0.1);
+    --glow-shadow: 0 0 40px -10px hsl(212 76% 54% / 0.3);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
