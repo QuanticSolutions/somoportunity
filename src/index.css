@@ -16,40 +16,40 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
 
-    --primary: 221 83% 53%;
+    --primary: 212 76% 54%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 217 91% 60%;
+    --secondary: 212 76% 64%;
     --secondary-foreground: 210 40% 98%;
 
     --muted: 220 14% 96%;
     --muted-foreground: 220 9% 46%;
 
-    --accent: 214 95% 93%;
-    --accent-foreground: 221 83% 40%;
+    --accent: 212 76% 93%;
+    --accent-foreground: 212 76% 40%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 220 13% 91%;
     --input: 220 13% 91%;
-    --ring: 221 83% 53%;
+    --ring: 212 76% 54%;
 
     --radius: 0.75rem;
 
     /* Gradient tokens */
-    --hero-gradient: linear-gradient(135deg, hsl(222 47% 11%) 0%, hsl(221 60% 22%) 40%, hsl(221 83% 40%) 100%);
-    --gradient-primary: linear-gradient(135deg, hsl(221 83% 53%), hsl(217 91% 60%));
-    --gradient-button: linear-gradient(135deg, hsl(221 83% 53%), hsl(210 100% 55%));
-    --gradient-counter: linear-gradient(135deg, hsl(221 83% 53%), hsl(221 60% 35%));
-    --gradient-glow: radial-gradient(ellipse at center, hsl(221 83% 53% / 0.15), transparent 70%);
+    --hero-gradient: linear-gradient(135deg, hsl(222 47% 11%) 0%, hsl(212 60% 22%) 40%, hsl(212 76% 40%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(212 76% 54%), hsl(212 76% 64%));
+    --gradient-button: linear-gradient(135deg, hsl(212 76% 54%), hsl(212 80% 62%));
+    --gradient-counter: linear-gradient(135deg, hsl(212 76% 54%), hsl(212 60% 38%));
+    --gradient-glow: radial-gradient(ellipse at center, hsl(212 76% 54% / 0.15), transparent 70%);
     --gradient-glass: linear-gradient(135deg, hsl(0 0% 100% / 0.8), hsl(0 0% 100% / 0.4));
 
     /* Shadow tokens */
     --card-shadow: 0 4px 24px -4px hsl(222 47% 11% / 0.06);
-    --card-shadow-hover: 0 12px 32px -8px hsl(221 83% 53% / 0.18);
-    --search-shadow: 0 8px 32px -8px hsl(221 83% 53% / 0.1);
-    --glow-shadow: 0 0 40px -10px hsl(221 83% 53% / 0.3);
+    --card-shadow-hover: 0 12px 32px -8px hsl(212 76% 54% / 0.18);
+    --search-shadow: 0 8px 32px -8px hsl(212 76% 54% / 0.1);
+    --glow-shadow: 0 0 40px -10px hsl(212 76% 54% / 0.3);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -58,7 +58,7 @@
     --sidebar-accent: 240 4.8% 95.9%;
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 221 83% 53%;
+    --sidebar-ring: 212 76% 54%;
     --font-sans: Inter, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
   }
   .dark {
@@ -82,7 +82,7 @@
 @layer utilities {
   .text-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(221 83% 53%), hsl(210 100% 55%));
+    background-image: linear-gradient(135deg, hsl(212 76% 54%), hsl(212 80% 62%));
   }
   .hero-gradient {
     background-image: var(--hero-gradient);
@@ -95,7 +95,7 @@
     @apply text-primary-foreground transition-all duration-300;
   }
   .btn-gradient:hover {
-    background-image: linear-gradient(135deg, hsl(221 83% 48%), hsl(210 100% 50%));
+    background-image: linear-gradient(135deg, hsl(212 76% 48%), hsl(212 80% 56%));
     box-shadow: var(--glow-shadow);
   }
   .glass-card {
