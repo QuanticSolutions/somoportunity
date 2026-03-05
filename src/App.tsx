@@ -36,6 +36,9 @@ const App = () => (
         <AuthProvider>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/articles" element={<Articles />} />
 
             {/* Guest-only routes */}
             <Route path="/signup" element={<GuestRoute><SignUp /></GuestRoute>} />

@@ -95,7 +95,7 @@
     @apply text-primary-foreground transition-all duration-300;
   }
   .btn-gradient:hover {
-    background-image: linear-gradient(135deg, hsl(221 83% 48%), hsl(210 100% 50%));
+    background-image: linear-gradient(135deg, hsl(212 76% 48%), hsl(212 80% 56%));
     box-shadow: var(--glow-shadow);
   }
   .glass-card {
