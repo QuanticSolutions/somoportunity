@@ -15,6 +15,8 @@ import SignUpAccount from "./pages/SignUpAccount";
 import Onboarding from "./pages/Onboarding";
 import DashboardSeeker from "./pages/DashboardSeeker";
 import SubscriptionSelect from "./pages/SubscriptionSelect";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
 
 // Seeker dashboard sub-pages
