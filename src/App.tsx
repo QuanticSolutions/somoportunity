@@ -15,6 +15,8 @@ import SignUpAccount from "./pages/SignUpAccount";
 import Onboarding from "./pages/Onboarding";
 import DashboardSeeker from "./pages/DashboardSeeker";
 import SubscriptionSelect from "./pages/SubscriptionSelect";
+import ProviderPayment from "./pages/ProviderPayment";
+import ProviderPending from "./pages/ProviderPending";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import OpportunitiesBrowse from "./pages/OpportunitiesBrowse";

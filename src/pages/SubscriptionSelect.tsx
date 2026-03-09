@@ -42,15 +42,36 @@ export default function SubscriptionSelect() {
     if (!user) return;
     setSelecting(planId);
     try {
-      await supabase.from("provider_subscriptions").insert({
+      const { data: subData, error } = await supabase.from("provider_subscriptions").insert({
         provider_id: user.id,
         plan_id: planId,
+        status: "pending_payment",
+        payment_status: "awaiting_payment",
+      }).select().single();
+
+      if (error) throw error;
+
+      // Create admin notification
+      await supabase.from("admin_notifications").insert({
+        provider_id: user.id,
+        type: "subscription_request",
+        message: "New provider subscription request received.",
       });
+
+      // Create audit log
+      if (subData) {
+        await supabase.from("subscription_audit_logs").insert({
+          subscription_id: subData.id,
+          action: "provider_requested_plan",
+          notes: `Provider selected a subscription plan.`,
+        });
+      }
+
       toast({
-        title: "Subscription submitted",
-        description: "Your subscription is under administrative review. Opportunity posting will be unlocked once approved.",
+        title: "Plan selected",
+        description: "Your plan request has been received. Our team will contact you shortly with payment instructions.",
       });
-      navigate("/dashboard/provider", { replace: true });
+      navigate("/provider/payment", { replace: true });
     } catch (err: any) {
       toast({ title: "Error", description: err.message, variant: "destructive" });
     } finally {
