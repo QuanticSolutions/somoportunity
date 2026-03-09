@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Menu, X, User, LayoutDashboard, Settings, LogOut, ChevronDown } from "lucide-react";
+import { Menu, X, User, LayoutDashboard, Settings, LogOut, ChevronDown, Search, Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -10,13 +10,28 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 import { useAuth } from "@/contexts/AuthContext";
 import LoginModal from "@/components/LoginModal";
 
+const opportunityTypes = [
+  { label: "Scholarships", href: "/opportunities?type=scholarship" },
+  { label: "Fellowships", href: "/opportunities?type=fellowship" },
+  { label: "Internships", href: "/opportunities?type=internship" },
+  { label: "Grants", href: "/opportunities?type=grant" },
+  { label: "Workshops", href: "/opportunities?type=event" },
+  { label: "Conferences", href: "/opportunities?type=event" },
+];
+
 const navLinks = [
   { label: "Home", href: "/" },
-  { label: "Opportunities", href: "/opportunities" },
-  { label: "Articles", href: "/articles" },
+  { label: "Jobs", href: "/opportunities?type=job" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
