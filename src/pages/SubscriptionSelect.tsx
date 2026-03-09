@@ -37,7 +37,7 @@ export default function SubscriptionSelect() {
         return;
       }
 
-      const { data } = await supabase.from("subscription_plans").select("*").order("tier");
+      const { data } = await supabase.from("subscription_plans").select("*");
       setPlans(data || []);
       setLoading(false);
     };
@@ -51,8 +51,7 @@ export default function SubscriptionSelect() {
       const { data: subData, error } = await supabase.from("provider_subscriptions").insert({
         provider_id: user.id,
         plan_id: planId,
-        status: "pending_payment",
-        payment_status: "awaiting_payment",
+        status: "pending",
       }).select().single();
 
       if (error) throw error;
@@ -121,9 +120,9 @@ export default function SubscriptionSelect() {
                   </div>
                 )}
                 <CardHeader className="pt-8">
-                  <CardTitle className="text-xl">{plan.display_name}</CardTitle>
+                  <CardTitle className="text-xl">{plan.name}</CardTitle>
                   <CardDescription>
-                    <span className="text-3xl font-bold text-foreground">${plan.price_monthly}</span>
+                    <span className="text-3xl font-bold text-foreground">${plan.price}</span>
                     <span className="text-muted-foreground">/month</span>
                   </CardDescription>
                 </CardHeader>

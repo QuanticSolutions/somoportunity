@@ -71,6 +71,7 @@ export default function ProviderPayment() {
       const { error: uploadError } = await supabase.storage
         .from("payment_receipts")
         .upload(path, file, { upsert: true });
+      console.log(uploadError)
 
       if (uploadError) throw uploadError;
 
@@ -83,8 +84,6 @@ export default function ProviderPayment() {
         .from("provider_subscriptions")
         .update({
           receipt_url: urlData.publicUrl,
-          payment_status: "receipt_submitted",
-          status: "under_review",
         })
         .eq("id", sub.id);
 
@@ -136,7 +135,7 @@ export default function ProviderPayment() {
           <CreditCard size={32} className="mx-auto text-primary mb-3" />
           <h1 className="text-2xl font-extrabold text-foreground">Complete Payment</h1>
           <p className="text-muted-foreground mt-1">
-            Finalize your <span className="font-semibold text-foreground">{plan?.display_name}</span> subscription
+            Finalize your <span className="font-semibold text-foreground">{plan?.name}</span> subscription
           </p>
         </div>
 
@@ -149,11 +148,11 @@ export default function ProviderPayment() {
           <CardContent className="space-y-4">
             <div className="flex justify-between items-center py-3 px-4 rounded-lg bg-accent/50">
               <span className="text-sm text-muted-foreground">Plan</span>
-              <span className="font-semibold text-foreground">{plan?.display_name}</span>
+              <span className="font-semibold text-foreground">{plan?.name}</span>
             </div>
             <div className="flex justify-between items-center py-3 px-4 rounded-lg bg-accent/50">
               <span className="text-sm text-muted-foreground">Amount</span>
-              <span className="font-bold text-xl text-primary">${plan?.price_monthly}/month</span>
+              <span className="font-bold text-xl text-primary">${plan?.price}/month</span>
             </div>
 
             <div className="border border-border rounded-lg p-4 space-y-2">

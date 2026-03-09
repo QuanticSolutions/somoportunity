@@ -36,7 +36,6 @@ export async function updateProfile(
     )
     .select()
     .single();
-
   if (error) throw error;
   return data as Profile;
 }
