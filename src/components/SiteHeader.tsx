@@ -93,14 +93,14 @@ export default function SiteHeader() {
             </NavigationMenu>
           </nav>
 
-          <div className="hidden items-center gap-3 lg:flex">
+          <div className="hidden items-center gap-2 lg:flex">
             {!loading && !user && (
               <>
                 <Button variant="ghost" size="sm" className="text-foreground font-medium" onClick={() => setLoginOpen(true)}>
-                  Sign In
+                  Login
                 </Button>
                 <Button size="sm" className="btn-gradient font-semibold px-5 rounded-lg" onClick={() => navigate("/signup")}>
-                  Get Started
+                  Join
                 </Button>
               </>
             )}
