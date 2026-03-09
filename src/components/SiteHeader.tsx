@@ -57,16 +57,40 @@ export default function SiteHeader() {
           </a>
 
           {/* Desktop nav */}
-          <nav className="hidden items-center gap-6 lg:flex">
+          <nav className="hidden items-center gap-1 lg:flex">
             {navLinks.map((l) => (
               <button
                 key={l.label}
                 onClick={() => navigate(l.href)}
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                className="px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary rounded-md"
               >
                 {l.label}
               </button>
             ))}
+
+            {/* Opportunities dropdown */}
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="text-sm font-medium text-muted-foreground hover:text-primary bg-transparent">
+                    Opportunities
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <div className="grid w-48 gap-1 p-2">
+                      {opportunityTypes.map((item) => (
+                        <button
+                          key={item.label}
+                          onClick={() => navigate(item.href)}
+                          className="rounded-md px-3 py-2 text-sm text-left text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+                        >
+                          {item.label}
+                        </button>
+                      ))}
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
