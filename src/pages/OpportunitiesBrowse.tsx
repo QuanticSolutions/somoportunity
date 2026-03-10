@@ -45,7 +45,7 @@ export default function OpportunitiesBrowse() {
       const { data } = await supabase
         .from("opportunities")
         .select("*")
-        .in("status", ["approved", "active"])
+        .in("status", ["approved"])
         .order("created_at", { ascending: false });
       setOpps(data || []);
       setLoading(false);
@@ -57,7 +57,7 @@ export default function OpportunitiesBrowse() {
     return opps.filter(o => {
       if (keyword && !o.title?.toLowerCase().includes(keyword.toLowerCase()) && !o.description?.toLowerCase().includes(keyword.toLowerCase())) return false;
       if (locationFilter && !o.location?.toLowerCase().includes(locationFilter.toLowerCase())) return false;
-      if (selectedCategories.length && !selectedCategories.includes(o.type)) return false;
+      if (selectedCategories.length && !selectedCategories.includes(o.category)) return false;
       if (selectedModes.length && !selectedModes.includes(o.work_mode)) return false;
       return true;
     });

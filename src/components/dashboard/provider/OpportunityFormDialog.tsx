@@ -22,7 +22,7 @@ interface Props {
 
 interface FormState {
   title: string;
-  type: string;
+  category: string;
   work_mode: string;
   location: string;
   company: string;
@@ -36,7 +36,7 @@ interface FormState {
 }
 
 const emptyForm: FormState = {
-  title: "", type: "job", work_mode: "onsite", location: "", company: "",
+  title: "", category: "job", work_mode: "onsite", location: "", company: "",
   description: "", requirements: "", deadline: "", external_link: "",
   stipend_min: "", stipend_max: "", currency: "USD",
 };
@@ -50,7 +50,7 @@ export default function OpportunityFormDialog({ open, onOpenChange, editOpp, can
     if (editOpp) {
       setForm({
         title: editOpp.title || "",
-        type: editOpp.type || "job",
+        category: editOpp.category || "job",
         work_mode: editOpp.work_mode || "onsite",
         location: editOpp.location || "",
         company: editOpp.company || "",
@@ -78,7 +78,7 @@ export default function OpportunityFormDialog({ open, onOpenChange, editOpp, can
     try {
       const payload = {
         title: form.title,
-        type: form.type,
+        category: form.category,
         work_mode: form.work_mode,
         location: form.location || null,
         company: form.company || null,
@@ -131,7 +131,7 @@ export default function OpportunityFormDialog({ open, onOpenChange, editOpp, can
 
           <div className="grid grid-cols-2 gap-3">
             <Field label="Category">
-              <Select value={form.type} onValueChange={v => set("type", v)}>
+              <Select value={form.category} onValueChange={v => set("category", v)}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
                   {categories.map(c => <SelectItem key={c} value={c} className="capitalize">{c}</SelectItem>)}

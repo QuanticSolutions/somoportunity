@@ -16,9 +16,10 @@ export default function LatestOpportunities() {
       const { data } = await supabase
         .from("opportunities")
         .select("*")
-        .in("status", ["approved", "active"])
+        .in("status", ["approved"])
         .order("created_at", { ascending: false })
         .limit(6);
+      console.log(data)
       setOpps(data || []);
       setLoading(false);
     };
