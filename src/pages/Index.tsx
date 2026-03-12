@@ -3,6 +3,8 @@ import HeroSection from "@/components/HeroSection";
 import CategoryGrid from "@/components/CategoryGrid";
 import FeaturedOpportunities from "@/components/FeaturedOpportunities";
 import LatestOpportunities from "@/components/LatestOpportunities";
+import ServicesSection from "@/components/ServicesSection";
+import TestimonialsSection from "@/components/TestimonialsSection";
 import ArticlesSection from "@/components/ArticlesSection";
 import CTASection from "@/components/CTASection";
 import PartnersSection from "@/components/PartnersSection";
@@ -13,12 +15,14 @@ const Index = () => (
     <SiteHeader />
     <main className="flex-1">
       <HeroSection />
+      <PartnersSection />
       <CategoryGrid />
       <FeaturedOpportunities />
       <LatestOpportunities />
+      <ServicesSection />
+      <TestimonialsSection />
       <ArticlesSection />
       <CTASection />
-      <PartnersSection />
     </main>
     <SiteFooter />
   </div>
