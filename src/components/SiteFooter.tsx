@@ -1,25 +1,23 @@
 import { useNavigate } from "react-router-dom";
 
-const footerLinks = {
-  Opportunities: [
+const footerColumns = {
+  Platform: [
+    { label: "Home", href: "/" },
     { label: "Jobs", href: "/opportunities?category=job" },
-    { label: "Scholarships", href: "/opportunities?category=scholarship" },
-    { label: "Grants", href: "/opportunities?category=grant" },
-    { label: "Fellowships", href: "/opportunities?category=fellowship" },
-    { label: "Internships", href: "/opportunities?category=internship" },
-  ],
-  Company: [
-    { label: "About Us", href: "/about" },
-    { label: "Contact", href: "/contact" },
+    { label: "Opportunities", href: "/opportunities" },
     { label: "Articles", href: "/articles" },
   ],
   Services: [
     { label: "Hire Talent", href: "/services/hire-talent" },
-    { label: "Post Opportunity", href: "/signup" },
+    { label: "Technical Writing", href: "/services/technical-writing" },
   ],
-  Legal: [
-    { label: "Privacy Policy", href: "#" },
-    { label: "Terms of Service", href: "#" },
+  Company: [
+    { label: "About", href: "/about" },
+    { label: "Contact", href: "/contact" },
+  ],
+  Resources: [
+    { label: "Articles", href: "/articles" },
+    { label: "Submit Content", href: "/signup" },
   ],
 };
 
@@ -42,12 +40,12 @@ export default function SiteFooter() {
           </div>
 
           {/* Link columns */}
-          {Object.entries(footerLinks).map(([title, links]) => (
+          {Object.entries(footerColumns).map(([title, links]) => (
             <div key={title}>
               <h4 className="text-sm font-bold text-foreground mb-4">{title}</h4>
               <ul className="space-y-2.5">
                 {links.map((link) => (
-                  <li key={link.label}>
+                  <li key={link.label + link.href}>
                     <button
                       onClick={() => navigate(link.href)}
                       className="text-sm text-muted-foreground hover:text-primary transition-colors"
@@ -65,6 +63,14 @@ export default function SiteFooter() {
           <p className="text-xs text-muted-foreground">
             © {new Date().getFullYear()} Somopportunity. All rights reserved.
           </p>
+          <div className="flex items-center gap-6">
+            <button onClick={() => navigate("#")} className="text-xs text-muted-foreground hover:text-primary transition-colors">
+              Privacy Policy
+            </button>
+            <button onClick={() => navigate("#")} className="text-xs text-muted-foreground hover:text-primary transition-colors">
+              Terms of Service
+            </button>
+          </div>
         </div>
       </div>
     </footer>

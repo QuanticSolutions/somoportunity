@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Menu, X, User, LayoutDashboard, Settings, LogOut, Search, Bell } from "lucide-react";
+import { Menu, X, User, LayoutDashboard, Settings, LogOut, Search, Bell, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -17,33 +17,46 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useAuth } from "@/contexts/AuthContext";
 import LoginModal from "@/components/LoginModal";
 
 const opportunityItems = [
+  { label: "Jobs", category: "job", desc: "Career opportunities across industries" },
   { label: "Scholarships", category: "scholarship", desc: "Funded education programs" },
+  { label: "Grants", category: "grant", desc: "Project & research funding" },
   { label: "Fellowships", category: "fellowship", desc: "Leadership & research programs" },
   { label: "Internships", category: "internship", desc: "Professional development" },
-  { label: "Grants", category: "grant", desc: "Project & research funding" },
   { label: "Workshops", category: "workshop", desc: "Skill-building events" },
   { label: "Conferences", category: "conference", desc: "Networking events" },
 ];
 
 const serviceItems = [
   { label: "Hire Talent", href: "/services/hire-talent", desc: "Recruit qualified professionals" },
+  { label: "Technical Writing", href: "/services/technical-writing", desc: "Professional documentation services" },
 ];
 
+// Exact order: Home → Jobs → Opportunities → Articles → Services → About → Contact → Submit Content
 const navLinks = [
   { label: "Home", href: "/" },
   { label: "Jobs", href: "/opportunities?category=job" },
+];
+
+const navLinksAfterDropdowns = [
   { label: "Articles", href: "/articles" },
+];
+
+const navLinksEnd = [
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
+  { label: "Submit Content", href: "/signup" },
 ];
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
+  const [mobileOppOpen, setMobileOppOpen] = useState(false);
+  const [mobileSvcOpen, setMobileSvcOpen] = useState(false);
   const { user, profile, signOut, loading } = useAuth();
   const navigate = useNavigate();
 
@@ -86,6 +99,15 @@ export default function SiteHeader() {
     </DropdownMenu>
   );
 
+  const NavButton = ({ label, href }: { label: string; href: string }) => (
+    <button
+      onClick={() => navigate(href)}
+      className="px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground rounded-lg hover:bg-accent/50"
+    >
+      {label}
+    </button>
+  );
+
   return (
     <>
       <header className="sticky top-0 z-50">
@@ -93,21 +115,16 @@ export default function SiteHeader() {
           <div className="glass-nav rounded-2xl border border-border/60 shadow-[var(--nav-shadow)] px-5 py-2.5">
             <div className="flex items-center justify-between">
               {/* Logo */}
-              <a href="/" className="flex items-center gap-1.5 text-xl font-extrabold tracking-tight">
+              <a href="/" className="flex items-center gap-1.5 text-xl font-extrabold tracking-tight shrink-0">
                 <span className="text-primary">Som</span>
                 <span className="text-gradient">opportunity</span>
               </a>
 
-              {/* Desktop nav */}
+              {/* Desktop nav — exact order */}
               <nav className="hidden items-center gap-0.5 lg:flex">
+                {/* Home, Jobs */}
                 {navLinks.map((l) => (
-                  <button
-                    key={l.label}
-                    onClick={() => navigate(l.href)}
-                    className="px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground rounded-lg hover:bg-accent/50"
-                  >
-                    {l.label}
-                  </button>
+                  <NavButton key={l.label} {...l} />
                 ))}
 
                 {/* Opportunities dropdown */}
@@ -135,6 +152,11 @@ export default function SiteHeader() {
                   </NavigationMenuList>
                 </NavigationMenu>
 
+                {/* Articles */}
+                {navLinksAfterDropdowns.map((l) => (
+                  <NavButton key={l.label} {...l} />
+                ))}
+
                 {/* Services dropdown */}
                 <NavigationMenu>
                   <NavigationMenuList>
@@ -159,28 +181,44 @@ export default function SiteHeader() {
                     </NavigationMenuItem>
                   </NavigationMenuList>
                 </NavigationMenu>
+
+                {/* About, Contact, Submit Content */}
+                {navLinksEnd.map((l) => (
+                  <NavButton key={l.label} {...l} />
+                ))}
               </nav>
 
-              {/* Right side */}
-              <div className="hidden items-center gap-2 lg:flex">
+              {/* Right side — Search, Notification, Auth */}
+              <div className="hidden items-center gap-1.5 lg:flex">
+                <button
+                  onClick={() => navigate("/opportunities")}
+                  className="rounded-lg p-2 text-muted-foreground hover:bg-accent/50 hover:text-foreground transition-colors"
+                  aria-label="Search"
+                >
+                  <Search size={18} />
+                </button>
+
+                {!loading && user && (
+                  <button
+                    onClick={() => navigate(`${dashboardPath}/notifications`)}
+                    className="rounded-lg p-2 text-muted-foreground hover:bg-accent/50 hover:text-foreground transition-colors"
+                    aria-label="Notifications"
+                  >
+                    <Bell size={18} />
+                  </button>
+                )}
+
                 {!loading && !user && (
                   <>
-                    <Button variant="ghost" size="sm" className="text-muted-foreground font-medium rounded-lg hover:bg-accent/50" onClick={() => setLoginOpen(true)}>
-                      Login
+                    <Button variant="ghost" size="sm" className="text-muted-foreground font-medium rounded-lg hover:bg-accent/50 ml-1" onClick={() => setLoginOpen(true)}>
+                      Log In
                     </Button>
                     <Button size="sm" className="btn-gradient font-semibold px-5 rounded-xl shadow-sm" onClick={() => navigate("/signup")}>
-                      Join Now
+                      Join
                     </Button>
                   </>
                 )}
-                {!loading && user && (
-                  <div className="flex items-center gap-3">
-                    <button className="rounded-lg p-2 text-muted-foreground hover:bg-accent/50 hover:text-foreground transition-colors">
-                      <Bell size={18} />
-                    </button>
-                    <UserMenu />
-                  </div>
-                )}
+                {!loading && user && <UserMenu />}
               </div>
 
               {/* Mobile toggle */}
@@ -199,48 +237,63 @@ export default function SiteHeader() {
           <div className="mx-auto max-w-7xl px-4 pt-2 lg:hidden">
             <nav className="glass-nav flex flex-col gap-1 rounded-2xl border border-border/60 shadow-[var(--nav-shadow)] p-4 animate-fade-in">
               {navLinks.map((l) => (
-                <button
-                  key={l.label}
-                  onClick={() => { setOpen(false); navigate(l.href); }}
-                  className="rounded-lg px-3 py-2.5 text-sm font-medium text-foreground text-left hover:bg-accent/50 transition-colors"
-                >
+                <button key={l.label} onClick={() => { setOpen(false); navigate(l.href); }}
+                  className="rounded-lg px-3 py-2.5 text-sm font-medium text-foreground text-left hover:bg-accent/50 transition-colors">
                   {l.label}
                 </button>
               ))}
 
-              <div className="pt-2 pb-1">
-                <p className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">Opportunities</p>
-                {opportunityItems.map((item) => (
-                  <button
-                    key={item.label}
-                    onClick={() => { setOpen(false); navigate(`/opportunities?category=${item.category}`); }}
-                    className="block w-full rounded-lg text-left text-sm text-muted-foreground py-2 px-3 hover:bg-accent/50 hover:text-foreground transition-colors"
-                  >
-                    {item.label}
-                  </button>
-                ))}
-              </div>
+              {/* Opportunities accordion */}
+              <Collapsible open={mobileOppOpen} onOpenChange={setMobileOppOpen}>
+                <CollapsibleTrigger className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-foreground hover:bg-accent/50 transition-colors">
+                  Opportunities <ChevronDown size={16} className={`transition-transform ${mobileOppOpen ? 'rotate-180' : ''}`} />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="pl-3">
+                  {opportunityItems.map((item) => (
+                    <button key={item.label} onClick={() => { setOpen(false); navigate(`/opportunities?category=${item.category}`); }}
+                      className="block w-full rounded-lg text-left text-sm text-muted-foreground py-2 px-3 hover:bg-accent/50 hover:text-foreground transition-colors">
+                      {item.label}
+                    </button>
+                  ))}
+                </CollapsibleContent>
+              </Collapsible>
 
-              <div className="pt-2 pb-1">
-                <p className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">Services</p>
-                {serviceItems.map((item) => (
-                  <button
-                    key={item.label}
-                    onClick={() => { setOpen(false); navigate(item.href); }}
-                    className="block w-full rounded-lg text-left text-sm text-muted-foreground py-2 px-3 hover:bg-accent/50 hover:text-foreground transition-colors"
-                  >
-                    {item.label}
-                  </button>
-                ))}
-              </div>
+              {navLinksAfterDropdowns.map((l) => (
+                <button key={l.label} onClick={() => { setOpen(false); navigate(l.href); }}
+                  className="rounded-lg px-3 py-2.5 text-sm font-medium text-foreground text-left hover:bg-accent/50 transition-colors">
+                  {l.label}
+                </button>
+              ))}
+
+              {/* Services accordion */}
+              <Collapsible open={mobileSvcOpen} onOpenChange={setMobileSvcOpen}>
+                <CollapsibleTrigger className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-foreground hover:bg-accent/50 transition-colors">
+                  Services <ChevronDown size={16} className={`transition-transform ${mobileSvcOpen ? 'rotate-180' : ''}`} />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="pl-3">
+                  {serviceItems.map((item) => (
+                    <button key={item.label} onClick={() => { setOpen(false); navigate(item.href); }}
+                      className="block w-full rounded-lg text-left text-sm text-muted-foreground py-2 px-3 hover:bg-accent/50 hover:text-foreground transition-colors">
+                      {item.label}
+                    </button>
+                  ))}
+                </CollapsibleContent>
+              </Collapsible>
+
+              {navLinksEnd.map((l) => (
+                <button key={l.label} onClick={() => { setOpen(false); navigate(l.href); }}
+                  className="rounded-lg px-3 py-2.5 text-sm font-medium text-foreground text-left hover:bg-accent/50 transition-colors">
+                  {l.label}
+                </button>
+              ))}
 
               {!loading && !user && (
                 <div className="flex flex-col gap-2 pt-3 border-t border-border/60">
                   <Button variant="outline" className="border-border text-foreground font-medium w-full rounded-xl" onClick={() => { setOpen(false); setLoginOpen(true); }}>
-                    Login
+                    Log In
                   </Button>
                   <Button className="btn-gradient font-semibold w-full rounded-xl" onClick={() => { setOpen(false); navigate("/signup"); }}>
-                    Join Now
+                    Join
                   </Button>
                 </div>
               )}
