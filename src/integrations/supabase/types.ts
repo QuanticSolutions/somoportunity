@@ -535,6 +535,39 @@ export type Database = {
         }
         Relationships: []
       }
+      technical_writing_requests: {
+        Row: {
+          created_at: string
+          deadline: string | null
+          description: string | null
+          email: string
+          full_name: string
+          id: string
+          organization_name: string
+          project_type: string | null
+        }
+        Insert: {
+          created_at?: string
+          deadline?: string | null
+          description?: string | null
+          email: string
+          full_name: string
+          id?: string
+          organization_name: string
+          project_type?: string | null
+        }
+        Update: {
+          created_at?: string
+          deadline?: string | null
+          description?: string | null
+          email?: string
+          full_name?: string
+          id?: string
+          organization_name?: string
+          project_type?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
