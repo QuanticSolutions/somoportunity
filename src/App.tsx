@@ -22,6 +22,7 @@ import ResetPassword from "./pages/ResetPassword";
 import OpportunitiesBrowse from "./pages/OpportunitiesBrowse";
 import OpportunityDetails from "./pages/OpportunityDetails";
 import HireTalent from "./pages/HireTalent";
+import TechnicalWriting from "./pages/TechnicalWriting";
 import NotFound from "./pages/NotFound";
 
 // Seeker dashboard sub-pages
