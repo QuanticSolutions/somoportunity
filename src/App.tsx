@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import GuestRoute from "@/components/GuestRoute";
+import AdminRoute from "@/components/admin/AdminRoute";
+import AdminLayout from "@/components/admin/AdminLayout";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -43,6 +45,17 @@ import ProviderDocuments from "./pages/dashboard/provider/Documents";
 import ProviderSubscription from "./pages/dashboard/provider/Subscription";
 import ProviderTeam from "./pages/dashboard/provider/Team";
 import ProviderSettings from "./pages/dashboard/provider/ProviderSettings";
+
+// Admin pages
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminUsers from "./pages/admin/AdminUsers";
+import AdminProviders from "./pages/admin/AdminProviders";
+import AdminSubscriptions from "./pages/admin/AdminSubscriptions";
+import AdminOpportunities from "./pages/admin/AdminOpportunities";
+import AdminArticles from "./pages/admin/AdminArticles";
+import AdminSubmissions from "./pages/admin/AdminSubmissions";
+import AdminAnalytics from "./pages/admin/AdminAnalytics";
+import AdminSettings from "./pages/admin/AdminSettings";
 
 const queryClient = new QueryClient();
 
@@ -97,6 +110,19 @@ const App = () => (
               <Route path="subscription" element={<ProviderSubscription />} />
               <Route path="team" element={<ProviderTeam />} />
               <Route path="settings" element={<ProviderSettings />} />
+            </Route>
+
+            {/* Admin panel */}
+            <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
+              <Route index element={<AdminDashboard />} />
+              <Route path="users" element={<AdminRoute requiredRole="admin"><AdminUsers /></AdminRoute>} />
+              <Route path="providers" element={<AdminProviders />} />
+              <Route path="subscriptions" element={<AdminSubscriptions />} />
+              <Route path="opportunities" element={<AdminOpportunities />} />
+              <Route path="articles" element={<AdminArticles />} />
+              <Route path="submissions" element={<AdminSubmissions />} />
+              <Route path="analytics" element={<AdminAnalytics />} />
+              <Route path="settings" element={<AdminRoute requiredRole="admin"><AdminSettings /></AdminRoute>} />
             </Route>
 
             <Route path="*" element={<NotFound />} />
