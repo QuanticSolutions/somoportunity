@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_logs: {
+        Row: {
+          action: string
+          admin_id: string | null
+          created_at: string
+          details: Json | null
+          id: string
+          target_id: string | null
+          target_type: string | null
+        }
+        Insert: {
+          action: string
+          admin_id?: string | null
+          created_at?: string
+          details?: Json | null
+          id?: string
+          target_id?: string | null
+          target_type?: string | null
+        }
+        Update: {
+          action?: string
+          admin_id?: string | null
+          created_at?: string
+          details?: Json | null
+          id?: string
+          target_id?: string | null
+          target_type?: string | null
+        }
+        Relationships: []
+      }
       admin_notifications: {
         Row: {
           created_at: string
@@ -96,6 +126,90 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      articles: {
+        Row: {
+          author_id: string | null
+          content: string | null
+          cover_image: string | null
+          created_at: string
+          excerpt: string | null
+          id: string
+          published_at: string | null
+          slug: string
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author_id?: string | null
+          content?: string | null
+          cover_image?: string | null
+          created_at?: string
+          excerpt?: string | null
+          id?: string
+          published_at?: string | null
+          slug: string
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string | null
+          content?: string | null
+          cover_image?: string | null
+          created_at?: string
+          excerpt?: string | null
+          id?: string
+          published_at?: string | null
+          slug?: string
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      content_submissions: {
+        Row: {
+          admin_notes: string | null
+          content: string | null
+          created_at: string
+          id: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+          submission_type: string
+          title: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          admin_notes?: string | null
+          content?: string | null
+          created_at?: string
+          id?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          submission_type?: string
+          title: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          admin_notes?: string | null
+          content?: string | null
+          created_at?: string
+          id?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          submission_type?: string
+          title?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
       }
       demo_requests: {
         Row: {
