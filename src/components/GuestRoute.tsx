@@ -15,6 +15,10 @@ export default function GuestRoute({ children }: { children: React.ReactNode }) 
   }
 
   if (user && profile) {
+    // Admin roles go to admin panel
+    if (["admin", "editor", "viewer"].includes(profile.role)) {
+      return <Navigate to="/admin" replace />;
+    }
     if (!isProfileComplete(profile)) {
       return <Navigate to="/onboarding" replace />;
     }
