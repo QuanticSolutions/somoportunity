@@ -87,7 +87,7 @@ export default function AdminOpportunities() {
                     <TableCell className="font-medium max-w-48 truncate">{opp.title}</TableCell>
                     <TableCell>{(opp.profiles as any)?.full_name || "—"}</TableCell>
                     <TableCell>
-                      <Badge variant="outline" className="capitalize">{opp.type}</Badge>
+                      <Badge variant="outline" className="capitalize">{opp.category}</Badge>
                     </TableCell>
                     <TableCell>
                       <Badge variant={statusVariant(opp.status)}>{opp.status}</Badge>

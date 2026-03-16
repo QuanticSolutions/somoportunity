@@ -149,7 +149,7 @@ export default function Opportunities() {
               {activeOpps.map((opp, i) => (
                 <motion.tr key={opp.id} className="border-b transition-colors hover:bg-muted/50" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.02 }}>
                   <TableCell className="font-medium">{opp.title}</TableCell>
-                  <TableCell className="hidden md:table-cell capitalize">{opp.type}</TableCell>
+                  <TableCell className="hidden md:table-cell capitalize">{opp.category}</TableCell>
                   <TableCell className="hidden sm:table-cell">{opp.location || "—"}</TableCell>
                   <TableCell className="hidden lg:table-cell">{opp.deadline ? new Date(opp.deadline).toLocaleDateString() : "—"}</TableCell>
                   <TableCell>

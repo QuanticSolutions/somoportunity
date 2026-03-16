@@ -61,7 +61,7 @@ export default function SavedJobs() {
                 <CardTitle className="text-base">{item.opportunity?.title || "Opportunity"}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <p className="text-sm text-muted-foreground">{item.opportunity?.company || "Company"} · {item.opportunity?.type || "Job"}</p>
+                <p className="text-sm text-muted-foreground">{item.opportunity?.company || "Company"} · <p className="text-sm text-muted-foreground">{item.opportunity?.company || "Company"} · {item.opportunity?.category || "Job"}</p></p>
                 <div className="flex gap-2">
                   <Button size="sm" className="btn-gradient rounded-lg font-semibold flex-1">Quick Apply</Button>
                   <Button size="sm" variant="ghost" className="text-destructive hover:bg-destructive/10" onClick={() => handleRemove(item.id)}>
