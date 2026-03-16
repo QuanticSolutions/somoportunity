@@ -22,7 +22,7 @@ export default function SavedJobs() {
     if (!user) return;
     const { data } = await supabase
       .from("saved_jobs")
-      .select("id, opportunity:opportunities(id, title, company, type)")
+      .select("id, opportunity:opportunities(id, title, company, category)")
       .eq("user_id", user.id)
       .order("created_at", { ascending: false });
     setSaved((data as unknown as SavedJob[]) || []);
