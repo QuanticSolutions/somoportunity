@@ -116,8 +116,7 @@ export default function SiteHeader() {
             <div className="flex items-center justify-between">
               {/* Logo */}
               <a href="/" className="flex items-center gap-1.5 text-xl font-extrabold tracking-tight shrink-0">
-                <span className="text-primary">Som</span>
-                <span className="text-gradient">opportunity</span>
+                <span className="text-gradient">Somopportunity</span>
               </a>
 
               {/* Desktop nav — exact order */}

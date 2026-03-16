@@ -23,7 +23,7 @@ export default function OpportunityDetails() {
         .from("opportunities")
         .select("*")
         .eq("id", id)
-        .in("status", ["approved", "active"])
+        .in("status", ["approved"])
         .single();
       setOpp(data);
       setLoading(false);

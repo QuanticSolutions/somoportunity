@@ -68,7 +68,7 @@ export default function OpportunitiesBrowse() {
     return opps.filter(o => {
       if (keyword && !o.title?.toLowerCase().includes(keyword.toLowerCase()) && !o.description?.toLowerCase().includes(keyword.toLowerCase())) return false;
       if (locationFilter && !o.location?.toLowerCase().includes(locationFilter.toLowerCase())) return false;
-      if (selectedCategories.length && !selectedCategories.includes(o.type)) return false;
+      if (selectedCategories.length && !selectedCategories.includes(o.category)) return false;
       if (selectedModes.length && !selectedModes.includes(o.work_mode)) return false;
       return true;
     });
@@ -209,8 +209,8 @@ export default function OpportunitiesBrowse() {
                             {opp.deadline && <> · Due {new Date(opp.deadline).toLocaleDateString()}</>}
                           </p>
                           <div className="flex flex-wrap gap-2">
-                            <Badge className={categoryColors[opp.type] || "bg-muted text-muted-foreground"}>
-                              {opp.type}
+                            <Badge className={categoryColors[opp.category] || "bg-muted text-muted-foreground"}>
+                              {opp.category}
                             </Badge>
                             <Badge className={workModeColors[opp.work_mode] || "bg-muted text-muted-foreground"}>
                               {opp.work_mode}

@@ -67,7 +67,7 @@ export default function LatestOpportunities() {
               >
                 <div className="flex items-center gap-2 mb-3">
                   <Badge className="bg-accent text-accent-foreground border-0 text-xs font-semibold capitalize rounded-lg">
-                    {opp.type}
+                    {opp.category}
                   </Badge>
                 </div>
 

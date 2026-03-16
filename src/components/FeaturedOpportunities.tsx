@@ -17,7 +17,7 @@ export default function FeaturedOpportunities() {
       const { data } = await supabase
         .from("opportunities")
         .select("*")
-        .in("status", ["approved", "active"])
+        .in("status", ["approved"])
         .order("views_count", { ascending: false })
         .limit(3);
       setFeatured(data || []);
@@ -71,7 +71,7 @@ export default function FeaturedOpportunities() {
                 <div className="flex flex-col flex-1 p-6">
                   <div className="flex items-center gap-2 mb-4">
                     <Badge className="bg-accent text-accent-foreground border-0 text-xs font-semibold capitalize rounded-lg">
-                      {opp.type}
+                      {opp.category}
                     </Badge>
                     {opp.work_mode && (
                       <Badge variant="outline" className="text-xs capitalize rounded-lg">
