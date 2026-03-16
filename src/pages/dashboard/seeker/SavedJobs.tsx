@@ -10,7 +10,7 @@ import { toast } from "@/hooks/use-toast";
 
 interface SavedJob {
   id: string;
-  opportunity: { id: string; title: string; company: string | null; type: string } | null;
+  opportunity: { id: string; title: string; company: string | null; category: string } | null;
 }
 
 export default function SavedJobs() {
