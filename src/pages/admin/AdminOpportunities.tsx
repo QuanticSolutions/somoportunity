@@ -74,7 +74,7 @@ export default function AdminOpportunities() {
                 <TableRow>
                   <TableHead>Title</TableHead>
                   <TableHead>Provider</TableHead>
-                  <TableHead>Type</TableHead>
+                  <TableHead>Category</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Deadline</TableHead>
                   <TableHead>Created</TableHead>
