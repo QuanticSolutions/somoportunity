@@ -344,6 +344,7 @@ export type Database = {
         Row: {
           allow_internal_apply: boolean
           attachments: Json | null
+          category: string
           company: string | null
           created_at: string
           currency: string | null
@@ -358,6 +359,7 @@ export type Database = {
           status: string
           stipend_max: number | null
           stipend_min: number | null
+          tags: string[] | null
           title: string
           type: string
           updated_at: string
@@ -367,6 +369,7 @@ export type Database = {
         Insert: {
           allow_internal_apply?: boolean
           attachments?: Json | null
+          category?: string
           company?: string | null
           created_at?: string
           currency?: string | null
@@ -381,6 +384,7 @@ export type Database = {
           status?: string
           stipend_max?: number | null
           stipend_min?: number | null
+          tags?: string[] | null
           title: string
           type?: string
           updated_at?: string
@@ -390,6 +394,7 @@ export type Database = {
         Update: {
           allow_internal_apply?: boolean
           attachments?: Json | null
+          category?: string
           company?: string | null
           created_at?: string
           currency?: string | null
@@ -404,6 +409,7 @@ export type Database = {
           status?: string
           stipend_max?: number | null
           stipend_min?: number | null
+          tags?: string[] | null
           title?: string
           type?: string
           updated_at?: string

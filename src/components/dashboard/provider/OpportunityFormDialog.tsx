@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, KeyboardEvent } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { X } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -33,18 +35,20 @@ interface FormState {
   stipend_min: string;
   stipend_max: string;
   currency: string;
+  tags: string[];
 }
 
 const emptyForm: FormState = {
   title: "", category: "job", work_mode: "onsite", location: "", company: "",
   description: "", requirements: "", deadline: "", external_link: "",
-  stipend_min: "", stipend_max: "", currency: "USD",
+  stipend_min: "", stipend_max: "", currency: "USD", tags: [],
 };
 
 export default function OpportunityFormDialog({ open, onOpenChange, editOpp, canPost, onSaved }: Props) {
   const { user } = useAuth();
   const [form, setForm] = useState<FormState>(emptyForm);
   const [saving, setSaving] = useState(false);
+  const [tagInput, setTagInput] = useState("");
 
   useEffect(() => {
     if (editOpp) {
@@ -61,13 +65,34 @@ export default function OpportunityFormDialog({ open, onOpenChange, editOpp, can
         stipend_min: editOpp.stipend_min?.toString() || "",
         stipend_max: editOpp.stipend_max?.toString() || "",
         currency: editOpp.currency || "USD",
+        tags: editOpp.tags || [],
       });
     } else {
       setForm(emptyForm);
     }
+    setTagInput("");
   }, [editOpp, open]);
 
   const set = (key: keyof FormState, val: string) => setForm(f => ({ ...f, [key]: val }));
+
+  const addTag = () => {
+    const tag = tagInput.trim().toLowerCase();
+    if (tag && !form.tags.includes(tag)) {
+      setForm(f => ({ ...f, tags: [...f.tags, tag] }));
+    }
+    setTagInput("");
+  };
+
+  const removeTag = (tag: string) => {
+    setForm(f => ({ ...f, tags: f.tags.filter(t => t !== tag) }));
+  };
+
+  const handleTagKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addTag();
+    }
+  };
 
   const handleSave = async () => {
     if (!form.title.trim()) {
@@ -89,6 +114,7 @@ export default function OpportunityFormDialog({ open, onOpenChange, editOpp, can
         stipend_min: form.stipend_min ? Number(form.stipend_min) : null,
         stipend_max: form.stipend_max ? Number(form.stipend_max) : null,
         currency: form.currency || "USD",
+        tags: form.tags,
       };
 
       if (editOpp) {
@@ -171,6 +197,34 @@ export default function OpportunityFormDialog({ open, onOpenChange, editOpp, can
 
           <Field label="Deadline">
             <Input type="date" value={form.deadline} onChange={e => set("deadline", e.target.value)} />
+          </Field>
+
+          <Field label="Tags">
+            <div className="space-y-2">
+              <div className="flex gap-2">
+                <Input
+                  value={tagInput}
+                  onChange={e => setTagInput(e.target.value)}
+                  onKeyDown={handleTagKeyDown}
+                  placeholder="Type a tag and press Enter"
+                />
+                <Button type="button" variant="outline" size="sm" onClick={addTag} className="shrink-0">
+                  Add
+                </Button>
+              </div>
+              {form.tags.length > 0 && (
+                <div className="flex flex-wrap gap-1.5">
+                  {form.tags.map(tag => (
+                    <Badge key={tag} variant="secondary" className="gap-1 pr-1">
+                      {tag}
+                      <button type="button" onClick={() => removeTag(tag)} className="ml-0.5 rounded-full hover:bg-muted-foreground/20 p-0.5">
+                        <X size={12} />
+                      </button>
+                    </Badge>
+                  ))}
+                </div>
+              )}
+            </div>
           </Field>
 
           <Field label="Description">

@@ -10,7 +10,7 @@ import { toast } from "@/hooks/use-toast";
 
 interface SavedJob {
   id: string;
-  opportunity: { id: string; title: string; company: string | null; type: string } | null;
+  opportunity: { id: string; title: string; company: string | null; category: string } | null;
 }
 
 export default function SavedJobs() {
@@ -22,7 +22,7 @@ export default function SavedJobs() {
     if (!user) return;
     const { data } = await supabase
       .from("saved_jobs")
-      .select("id, opportunity:opportunities(id, title, company, type)")
+      .select("id, opportunity:opportunities(id, title, company, category)")
       .eq("user_id", user.id)
       .order("created_at", { ascending: false });
     setSaved((data as unknown as SavedJob[]) || []);
@@ -61,7 +61,7 @@ export default function SavedJobs() {
                 <CardTitle className="text-base">{item.opportunity?.title || "Opportunity"}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <p className="text-sm text-muted-foreground">{item.opportunity?.company || "Company"} · {item.opportunity?.type || "Job"}</p>
+                <p className="text-sm text-muted-foreground">{item.opportunity?.company || "Company"} · <p className="text-sm text-muted-foreground">{item.opportunity?.company || "Company"} · {item.opportunity?.category || "Job"}</p></p>
                 <div className="flex gap-2">
                   <Button size="sm" className="btn-gradient rounded-lg font-semibold flex-1">Quick Apply</Button>
                   <Button size="sm" variant="ghost" className="text-destructive hover:bg-destructive/10" onClick={() => handleRemove(item.id)}>
