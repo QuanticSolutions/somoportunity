@@ -26,8 +26,11 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
     if (profile?.role === "provider") {
       // Provider goes through subscription flow — SubscriptionSelect handles routing
       navigate("/provider/subscribe", { replace: true });
-    } else {
+    } else if (profile?.role === "seeker"){
       navigate("/dashboard/seeker", { replace: true });
+    }
+    else {
+      navigate("/dashboard/admin", { replace: true });
     }
   };
 
