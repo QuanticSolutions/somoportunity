@@ -25,7 +25,7 @@ export default function AdminDashboard() {
         { count: applicationsCount },
       ] = await Promise.all([
         supabase.from("profiles").select("*", { count: "exact", head: true }),
-        supabase.from("opportunities").select("*", { count: "exact", head: true }).eq("status", "active"),
+        supabase.from("opportunities").select("*", { count: "exact", head: true }).eq("status", "approved"),
         supabase.from("profiles").select("*", { count: "exact", head: true }).eq("role", "provider"),
         supabase.from("provider_subscriptions").select("*", { count: "exact", head: true }).eq("status", "pending_approval"),
         supabase.from("articles").select("*", { count: "exact", head: true }).eq("status", "published"),

@@ -30,7 +30,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
       navigate("/dashboard/seeker", { replace: true });
     }
     else {
-      navigate("/dashboard/admin", { replace: true });
+      navigate("/admin", { replace: true });
     }
   };
 
