@@ -42,7 +42,6 @@ export default function AdminSubscriptions() {
       return;
     }
 
-    // Audit log
     await supabase.from("subscription_audit_logs").insert({
       subscription_id: subId,
       admin_id: adminUser?.id,
@@ -63,7 +62,7 @@ export default function AdminSubscriptions() {
   const statusVariant = (status: string) => {
     switch (status) {
       case "active": return "default";
-      case "pending_approval": return "secondary";
+      case "pending": case "pending_approval": return "secondary";
       case "under_review": return "outline";
       case "rejected": return "destructive";
       default: return "outline";
@@ -93,7 +92,6 @@ export default function AdminSubscriptions() {
                   <TableHead>Provider</TableHead>
                   <TableHead>Plan</TableHead>
                   <TableHead>Status</TableHead>
-                  <TableHead>Payment</TableHead>
                   <TableHead>Receipt</TableHead>
                   <TableHead>Created</TableHead>
                   <TableHead>Actions</TableHead>
@@ -108,11 +106,6 @@ export default function AdminSubscriptions() {
                     <TableCell>{sub.subscription_plans?.display_name || "—"}</TableCell>
                     <TableCell>
                       <Badge variant={statusVariant(sub.status)}>{sub.status}</Badge>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant={sub.payment_status === "paid" ? "default" : "secondary"}>
-                        {sub.payment_status}
-                      </Badge>
                     </TableCell>
                     <TableCell>
                       {sub.receipt_url ? (
@@ -141,7 +134,7 @@ export default function AdminSubscriptions() {
                             Reject
                           </Button>
                         )}
-                        {sub.status === "pending_approval" && (
+                        {(sub.status === "pending" || sub.status === "pending_approval") && (
                           <Button size="sm" variant="outline" onClick={() => updateStatus(sub.id, sub.provider_id, "under_review")}>
                             Mark Contacted
                           </Button>

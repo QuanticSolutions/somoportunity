@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Upload, CreditCard, CheckCircle, AlertCircle } from "lucide-react";
+import { Upload, CreditCard, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -37,14 +36,12 @@ export default function ProviderPayment() {
       return;
     }
 
-    // If already active, go to dashboard
     if (data.status === "active") {
       navigate("/dashboard/provider", { replace: true });
       return;
     }
 
-    // If receipt already submitted, go to pending
-    if (data.payment_status === "receipt_submitted" || data.status === "under_review") {
+    if (data.receipt_url || data.status === "under_review") {
       navigate("/provider/pending", { replace: true });
       return;
     }
@@ -68,38 +65,55 @@ export default function ProviderPayment() {
       const ext = file.name.split(".").pop();
       const path = `${user.id}/receipt_${Date.now()}.${ext}`;
 
-      const { error: uploadError } = await supabase.storage
+      console.log("[Receipt] Uploading file to storage:", path);
+      const { data: uploadData, error: uploadError } = await supabase.storage
         .from("payment_receipts")
         .upload(path, file, { upsert: true });
-      console.log(uploadError)
 
-      if (uploadError) throw uploadError;
+      if (uploadError) {
+        console.error("[Receipt] Upload error:", uploadError);
+        throw uploadError;
+      }
+      console.log("[Receipt] Upload success:", uploadData?.path);
 
       const { data: urlData } = supabase.storage
         .from("payment_receipts")
-        .getPublicUrl(path);
+        .getPublicUrl(uploadData?.path || path);
 
-      // Update subscription with receipt
-      await supabase
+      const receiptUrl = urlData.publicUrl;
+      console.log("[Receipt] Public URL:", receiptUrl);
+
+      // Update subscription with receipt URL and status
+      const { error: updateError } = await supabase
         .from("provider_subscriptions")
         .update({
-          receipt_url: urlData.publicUrl,
+          receipt_url: receiptUrl,
+          status: "under_review",
+          payment_status: "receipt_submitted",
         })
         .eq("id", sub.id);
 
+      if (updateError) {
+        console.error("[Receipt] DB update error:", updateError);
+        throw updateError;
+      }
+      console.log("[Receipt] DB updated successfully for subscription:", sub.id);
+
       // Create admin notification
-      await supabase.from("admin_notifications").insert({
+      const { error: notifError } = await supabase.from("admin_notifications").insert({
         provider_id: user.id,
         type: "receipt_uploaded",
-        message: `Provider uploaded payment receipt for ${plan?.display_name} plan.`,
+        message: `Provider uploaded payment receipt for ${plan?.display_name || plan?.name} plan.`,
       });
+      if (notifError) console.error("[Receipt] Notification insert error:", notifError);
 
       // Create audit log
-      await supabase.from("subscription_audit_logs").insert({
+      const { error: auditError } = await supabase.from("subscription_audit_logs").insert({
         subscription_id: sub.id,
         action: "receipt_uploaded",
         notes: "Provider uploaded payment proof.",
       });
+      if (auditError) console.error("[Receipt] Audit log error:", auditError);
 
       toast({
         title: "Receipt uploaded",
@@ -108,6 +122,7 @@ export default function ProviderPayment() {
 
       navigate("/provider/pending", { replace: true });
     } catch (err: any) {
+      console.error("[Receipt] Full error:", err);
       toast({ title: "Upload failed", description: err.message, variant: "destructive" });
     } finally {
       setUploading(false);
@@ -135,11 +150,10 @@ export default function ProviderPayment() {
           <CreditCard size={32} className="mx-auto text-primary mb-3" />
           <h1 className="text-2xl font-extrabold text-foreground">Complete Payment</h1>
           <p className="text-muted-foreground mt-1">
-            Finalize your <span className="font-semibold text-foreground">{plan?.name}</span> subscription
+            Finalize your <span className="font-semibold text-foreground">{plan?.display_name || plan?.name}</span> subscription
           </p>
         </div>
 
-        {/* Payment Details Card */}
         <Card className="glow-border">
           <CardHeader>
             <CardTitle className="text-lg">Payment Details</CardTitle>
@@ -148,11 +162,11 @@ export default function ProviderPayment() {
           <CardContent className="space-y-4">
             <div className="flex justify-between items-center py-3 px-4 rounded-lg bg-accent/50">
               <span className="text-sm text-muted-foreground">Plan</span>
-              <span className="font-semibold text-foreground">{plan?.name}</span>
+              <span className="font-semibold text-foreground">{plan?.display_name || plan?.name}</span>
             </div>
             <div className="flex justify-between items-center py-3 px-4 rounded-lg bg-accent/50">
               <span className="text-sm text-muted-foreground">Amount</span>
-              <span className="font-bold text-xl text-primary">${plan?.price}/month</span>
+              <span className="font-bold text-xl text-primary">${plan?.price_monthly}/month</span>
             </div>
 
             <div className="border border-border rounded-lg p-4 space-y-2">
@@ -172,7 +186,6 @@ export default function ProviderPayment() {
           </CardContent>
         </Card>
 
-        {/* Upload Receipt Card */}
         <Card className="glow-border">
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2">
