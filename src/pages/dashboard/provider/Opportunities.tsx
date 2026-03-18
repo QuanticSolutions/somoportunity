@@ -183,6 +183,8 @@ export default function Opportunities() {
         canPost={canPost()}
         onSaved={handleSaved}
       />
+
+      <WhatHappensNext />
     </div>
   );
 }
