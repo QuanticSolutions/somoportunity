@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Facebook, Twitter, Linkedin, Instagram, Youtube, Mail, Phone, MapPin } from "lucide-react";
+import { Facebook, Linkedin, Mail, MapPin, Send, MessageCircle } from "lucide-react";
 
 const opportunities = [
   { label: "Scholarships", href: "/opportunities?category=scholarship" },
@@ -13,8 +13,8 @@ const company = [
   { label: "About Us", href: "/about" },
   { label: "Our Team", href: "/about#team" },
   { label: "Careers", href: "/opportunities?category=job" },
-  { label: "Press", href: "/about#press" },
   { label: "Blog", href: "/articles" },
+  { label: "Hire Talent", href: "/hire-talent" },
 ];
 
 const support = [
@@ -26,17 +26,16 @@ const support = [
 ];
 
 const socials = [
-  { icon: Facebook, href: "#", label: "Facebook" },
-  { icon: Twitter, href: "#", label: "Twitter" },
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
-  { icon: Instagram, href: "#", label: "Instagram" },
-  { icon: Youtube, href: "#", label: "YouTube" },
+  { icon: Linkedin, href: "https://so.linkedin.com/company/somopportunity", label: "LinkedIn" },
+  { icon: Facebook, href: "https://www.facebook.com/share/1Cb4M76mHC/?mibextid=wwXIfr", label: "Facebook" },
+  { icon: Send, href: "https://t.me/somopportunity", label: "Telegram" },
+  { icon: MessageCircle, href: "https://whatsapp.com/channel/0029VbBXKMvDzgTFfwjIEO2n", label: "WhatsApp" },
 ];
 
 const contacts = [
-  { icon: Mail, label: "Email", value: "contact@somopportunity.com", href: "mailto:contact@somopportunity.com" },
-  { icon: Phone, label: "Phone", value: "+1 (555) 123-4567", href: "tel:+15551234567" },
-  { icon: MapPin, label: "Address", value: "San Francisco, CA 94102", href: "#" },
+  { icon: Mail, label: "Email", value: "info@somopportunity.com", href: "mailto:info@somopportunity.com" },
+  { icon: Mail, label: "Email", value: "Somopportunity@gmail.com", href: "mailto:Somopportunity@gmail.com" },
+  { icon: MapPin, label: "Location", value: "Hargeisa, Somaliland", href: "#" },
 ];
 
 function FooterLinkColumn({ title, links }: { title: string; links: { label: string; href: string }[] }) {
@@ -64,21 +63,21 @@ export default function SiteFooter() {
   const navigate = useNavigate();
 
   return (
-    <footer className="bg-gradient-to-br from-slate-900 to-blue-950">
+    <footer style={{ background: "var(--footer-gradient)" }}>
       {/* Main columns */}
       <div className="container py-16">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           {/* Branding */}
           <div>
             <div className="flex items-center gap-2.5 mb-4">
-              <div className="h-9 w-9 rounded-full bg-primary flex items-center justify-center">
+              <div className="h-9 w-9 rounded-full bg-white/20 flex items-center justify-center">
                 <span className="text-white font-extrabold text-sm">S</span>
               </div>
               <span className="text-lg font-extrabold tracking-tight text-white uppercase">
                 Somopportunity
               </span>
             </div>
-            <p className="text-sm text-slate-400 leading-relaxed mb-6">
+            <p className="text-sm text-slate-300 leading-relaxed mb-6">
               Your trusted platform for discovering scholarships, internships, and career opportunities worldwide. Join 2M+ members advancing their careers.
             </p>
             <div className="flex items-center gap-3">
@@ -86,8 +85,10 @@ export default function SiteFooter() {
                 <a
                   key={s.label}
                   href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-700 text-slate-400 transition-all duration-200 hover:bg-slate-800 hover:text-white hover:-translate-y-0.5"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white transition-all duration-200 hover:bg-primary hover:border-primary hover:-translate-y-0.5"
                 >
                   <s.icon className="h-4 w-4" />
                 </a>
@@ -103,23 +104,23 @@ export default function SiteFooter() {
 
       {/* Divider */}
       <div className="container">
-        <div className="border-t border-slate-800" />
+        <div className="border-t border-white/10" />
       </div>
 
       {/* Contact row */}
       <div className="container py-8">
         <div className="grid gap-6 sm:grid-cols-3">
-          {contacts.map((c) => (
+          {contacts.map((c, i) => (
             <a
-              key={c.label}
+              key={`${c.label}-${i}`}
               href={c.href}
               className="flex items-center gap-3 group"
             >
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/20 text-primary transition-colors group-hover:bg-primary/30">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/10 text-white transition-colors group-hover:bg-primary">
                 <c.icon className="h-4 w-4" />
               </div>
               <div>
-                <p className="text-xs text-slate-500">{c.label}</p>
+                <p className="text-xs text-slate-400">{c.label}</p>
                 <p className="text-sm text-slate-300 group-hover:text-white transition-colors">{c.value}</p>
               </div>
             </a>
@@ -129,13 +130,13 @@ export default function SiteFooter() {
 
       {/* Divider */}
       <div className="container">
-        <div className="border-t border-slate-800" />
+        <div className="border-t border-white/10" />
       </div>
 
       {/* Copyright */}
       <div className="container py-6">
         <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:justify-between sm:text-left">
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-slate-400">
             © {new Date().getFullYear()} SomOpportunity. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
@@ -143,7 +144,7 @@ export default function SiteFooter() {
               <button
                 key={t}
                 onClick={() => navigate("#")}
-                className="text-xs text-slate-500 hover:text-slate-300 transition-colors"
+                className="text-xs text-slate-400 hover:text-white transition-colors"
               >
                 {t}
               </button>

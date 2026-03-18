@@ -10,6 +10,7 @@ import { toast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import OpportunityFormDialog from "@/components/dashboard/provider/OpportunityFormDialog";
+import WhatHappensNext from "@/components/WhatHappensNext";
 
 const statusStyles: Record<string, string> = {
   draft: "bg-muted text-muted-foreground",
@@ -183,6 +184,8 @@ export default function Opportunities() {
         canPost={canPost()}
         onSaved={handleSaved}
       />
+
+      <WhatHappensNext />
     </div>
   );
 }
