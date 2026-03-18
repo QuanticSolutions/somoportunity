@@ -42,7 +42,10 @@
     --gradient-primary-bold: linear-gradient(135deg, hsl(219 91% 48%), hsl(219 80% 58%));
     
     /* Hero */
-    --hero-gradient: linear-gradient(135deg, hsl(222 47% 8%) 0%, hsl(219 55% 16%) 40%, hsl(219 91% 32%) 100%);
+    --hero-gradient: linear-gradient(135deg, hsl(219 91% 57%) 0%, hsl(219 91% 44%) 100%);
+
+    /* Footer */
+    --footer-gradient: linear-gradient(135deg, hsl(220 60% 12%) 0%, hsl(219 91% 44%) 100%);
     
     /* Buttons */
     --gradient-button: linear-gradient(135deg, hsl(219 91% 57%), hsl(219 85% 62%));
