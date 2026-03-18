@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/contexts/AuthContext";
-import { updateProfile, uploadAvatar, type AppRole } from "@/services/profile";
+import { updateProfile, uploadAvatar, getProfile, type AppRole } from "@/services/profile";
 import { toast } from "@/hooks/use-toast";
 
 const countries = [
@@ -32,7 +32,8 @@ export default function Onboarding() {
   // Handle OAuth redirect — set role from localStorage
   useEffect(() => {
     const savedRole = localStorage.getItem("signup_role") as AppRole | null;
-    if (savedRole && user && profile && !profile.role) {
+    if (savedRole && user && profile && (!profile.role || profile.role === "seeker")) {
+      console.log("[Onboarding] Setting saved role from localStorage:", savedRole);
       updateProfile(user.id, { role: savedRole }).then(() => {
         localStorage.removeItem("signup_role");
         refreshProfile();
@@ -80,12 +81,25 @@ export default function Onboarding() {
       }
 
       await updateProfile(user.id, { country, bio: bio.trim(), avatar_url });
+      console.log("[Onboarding] Profile updated with country/bio");
+
+      // Re-fetch profile from DB to get the confirmed role
+      const freshProfile = await getProfile(user.id);
+      console.log("[Onboarding] Fresh profile role:", freshProfile?.role);
+
+      // Also refresh context
       await refreshProfile();
 
       toast({ title: "Profile complete! 🎉", description: "Welcome to Somopportunity" });
 
-      const role = profile?.role || "seeker";
-      navigate(role === "provider" ? "/provider/subscribe" : "/dashboard/seeker", { replace: true });
+      const confirmedRole = freshProfile?.role || "seeker";
+      console.log("[Onboarding] Redirecting based on role:", confirmedRole);
+
+      if (confirmedRole === "provider") {
+        navigate("/provider/subscribe", { replace: true });
+      } else {
+        navigate("/dashboard/seeker", { replace: true });
+      }
     } catch (err: any) {
       toast({ title: "Error", description: err.message, variant: "destructive" });
     } finally {
