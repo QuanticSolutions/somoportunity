@@ -38,7 +38,7 @@ export default function CTASection() {
             <Button
               size="lg"
               variant="outline"
-              className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 font-semibold px-8 rounded-xl h-12 backdrop-blur-sm"
+              className="bg-card text-foreground hover:bg-card/90 font-bold text-base px-8 gap-2 rounded-xl h-12 shadow-lg"
               onClick={() => navigate("/opportunities")}
             >
               Browse Opportunities

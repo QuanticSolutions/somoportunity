@@ -15,8 +15,9 @@ export default function AdminSubscriptions() {
     setLoading(true);
     const { data } = await supabase
       .from("provider_subscriptions")
-      .select("*, subscription_plans(display_name), profiles!provider_subscriptions_provider_id_fkey(full_name)")
+      .select("*, subscription_plans(name), profiles!provider_subscriptions_provider_id_fkey(full_name)")
       .order("created_at", { ascending: false });
+    console.log(data)
     setSubs(data || []);
     setLoading(false);
   };
@@ -29,7 +30,7 @@ export default function AdminSubscriptions() {
     if (status === "active") {
       updates.approved_by = adminUser?.id;
       updates.approved_at = new Date().toISOString();
-      updates.payment_status = "paid";
+      updates.status = "paid";
     }
 
     const { error } = await supabase
@@ -105,13 +106,13 @@ export default function AdminSubscriptions() {
                     <TableCell className="font-medium">
                       {(sub.profiles as any)?.full_name || "—"}
                     </TableCell>
-                    <TableCell>{sub.subscription_plans?.display_name || "—"}</TableCell>
+                    <TableCell>{sub.subscription_plans?.name || "—"}</TableCell>
                     <TableCell>
                       <Badge variant={statusVariant(sub.status)}>{sub.status}</Badge>
                     </TableCell>
                     <TableCell>
-                      <Badge variant={sub.payment_status === "paid" ? "default" : "secondary"}>
-                        {sub.payment_status}
+                      <Badge variant={sub.status === "paid" ? "default" : "secondary"}>
+                        {sub.status}
                       </Badge>
                     </TableCell>
                     <TableCell>

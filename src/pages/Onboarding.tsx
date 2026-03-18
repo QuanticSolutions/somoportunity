@@ -34,7 +34,6 @@ export default function Onboarding() {
     const savedRole = localStorage.getItem("signup_role") as AppRole | null;
     if (savedRole && user && profile && !profile.role) {
       updateProfile(user.id, { role: savedRole }).then(() => {
-        localStorage.removeItem("signup_role");
         refreshProfile();
       });
     }
@@ -84,7 +83,7 @@ export default function Onboarding() {
 
       toast({ title: "Profile complete! 🎉", description: "Welcome to Somopportunity" });
 
-      const role = profile?.role || "seeker";
+      const role = localStorage.getItem("signup_role") as AppRole | null;
       navigate(role === "provider" ? "/provider/subscribe" : "/dashboard/seeker", { replace: true });
     } catch (err: any) {
       toast({ title: "Error", description: err.message, variant: "destructive" });
