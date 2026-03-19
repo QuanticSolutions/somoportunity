@@ -17,7 +17,6 @@ export default function AdminSubscriptions() {
       .from("provider_subscriptions")
       .select("*, subscription_plans(name), profiles!provider_subscriptions_provider_id_fkey(full_name)")
       .order("created_at", { ascending: false });
-    console.log(data)
     setSubs(data || []);
     setLoading(false);
   };
@@ -28,9 +27,10 @@ export default function AdminSubscriptions() {
     const adminUser = (await supabase.auth.getUser()).data.user;
     const updates: any = { status };
     if (status === "active") {
+      console.log(status)
       updates.approved_by = adminUser?.id;
       updates.approved_at = new Date().toISOString();
-      updates.status = "paid";
+      updates.status = "active";
     }
 
     const { error } = await supabase
@@ -64,8 +64,8 @@ export default function AdminSubscriptions() {
     switch (status) {
       case "active": return "default";
       case "pending": case "pending_approval": return "secondary";
-      case "under_review": return "outline";
-      case "rejected": return "destructive";
+      case "expired": return "outline";
+      case "cancelled": return "destructive";
       default: return "outline";
     }
   };
@@ -131,12 +131,12 @@ export default function AdminSubscriptions() {
                           </Button>
                         )}
                         {sub.status !== "rejected" && sub.status !== "active" && (
-                          <Button size="sm" variant="destructive" onClick={() => updateStatus(sub.id, sub.provider_id, "rejected")}>
+                          <Button size="sm" variant="destructive" onClick={() => updateStatus(sub.id, sub.provider_id, "cancelled")}>
                             Reject
                           </Button>
                         )}
                         {(sub.status === "pending" || sub.status === "pending_approval") && (
-                          <Button size="sm" variant="outline" onClick={() => updateStatus(sub.id, sub.provider_id, "under_review")}>
+                          <Button size="sm" variant="outline" onClick={() => updateStatus(sub.id, sub.provider_id, "pending")}>
                             Mark Contacted
                           </Button>
                         )}

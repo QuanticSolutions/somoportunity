@@ -88,8 +88,7 @@ export default function ProviderPayment() {
         .from("provider_subscriptions")
         .update({
           receipt_url: receiptUrl,
-          status: "under_review",
-          payment_status: "receipt_submitted",
+          status: "pending",
         })
         .eq("id", sub.id);
 
