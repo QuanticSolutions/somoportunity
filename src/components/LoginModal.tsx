@@ -26,7 +26,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
     if (profile?.role === "provider") {
       // Provider goes through subscription flow — SubscriptionSelect handles routing
       navigate("/provider/subscribe", { replace: true });
-    } else if (profile?.role === "seeker"){
+    } else if (profile?.role === "seeker") {
       navigate("/dashboard/seeker", { replace: true });
     }
     else {
@@ -50,11 +50,19 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
   };
 
   const handleGoogleLogin = async () => {
-    const { error } = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+      },
     });
+
     if (error) {
-      toast({ title: "Login failed", description: error.message, variant: "destructive" });
+      toast({
+        title: "Login failed",
+        description: error.message,
+        variant: "destructive",
+      });
     }
   };
 
