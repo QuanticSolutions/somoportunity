@@ -26,6 +26,8 @@ import OpportunityDetails from "./pages/OpportunityDetails";
 import HireTalent from "./pages/HireTalent";
 import TechnicalWriting from "./pages/TechnicalWriting";
 import NotFound from "./pages/NotFound";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
 
 // Seeker dashboard sub-pages
 import Explore from "./pages/dashboard/seeker/Explore";
