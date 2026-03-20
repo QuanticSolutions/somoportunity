@@ -99,14 +99,26 @@ export default function SiteHeader() {
     </DropdownMenu>
   );
 
-  const NavButton = ({ label, href }: { label: string; href: string }) => (
-    <button
-      onClick={() => navigate(href)}
-      className="px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground rounded-lg hover:bg-accent/50"
-    >
-      {label}
-    </button>
-  );
+  const NavButton = ({ label, href }: { label: string; href: string }) => {
+    const isActive = window.location.pathname === href || (href !== "/" && window.location.pathname.startsWith(href.split("?")[0]));
+    return (
+      <button
+        onClick={() => navigate(href)}
+        className={`relative px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 group ${
+          isActive
+            ? "text-primary"
+            : "text-muted-foreground hover:text-primary"
+        }`}
+      >
+        {label}
+        <span
+          className={`absolute bottom-0.5 left-3 right-3 h-0.5 rounded-full bg-primary transition-transform duration-200 origin-left ${
+            isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+          }`}
+        />
+      </button>
+    );
+  };
 
   return (
     <>

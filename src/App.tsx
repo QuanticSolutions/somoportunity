@@ -26,6 +26,8 @@ import OpportunityDetails from "./pages/OpportunityDetails";
 import HireTalent from "./pages/HireTalent";
 import TechnicalWriting from "./pages/TechnicalWriting";
 import NotFound from "./pages/NotFound";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
 
 // Seeker dashboard sub-pages
 import Explore from "./pages/dashboard/seeker/Explore";
@@ -75,6 +77,8 @@ const App = () => (
             <Route path="/opportunities/:id" element={<OpportunityDetails />} />
             <Route path="/services/hire-talent" element={<HireTalent />} />
             <Route path="/services/technical-writing" element={<TechnicalWriting />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
 
             {/* Guest-only routes */}
             <Route path="/signup" element={<GuestRoute><SignUp /></GuestRoute>} />

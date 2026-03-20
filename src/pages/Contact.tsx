@@ -78,7 +78,7 @@ export default function Contact() {
                   <Mail size={20} className="text-primary mt-0.5" />
                   <div>
                     <p className="font-medium text-foreground">Email</p>
-                    <p className="text-sm text-muted-foreground">contact@somopportunity.com</p>
+                    <a href="mailto:somopportunity@gmail.com" className="text-sm text-muted-foreground hover:text-primary transition-colors">somopportunity@gmail.com</a>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">

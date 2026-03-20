@@ -33,8 +33,7 @@ const socials = [
 ];
 
 const contacts = [
-  { icon: Mail, label: "Email", value: "info@somopportunity.com", href: "mailto:info@somopportunity.com" },
-  { icon: Mail, label: "Email", value: "Somopportunity@gmail.com", href: "mailto:Somopportunity@gmail.com" },
+  { icon: Mail, label: "Email", value: "somopportunity@gmail.com", href: "mailto:somopportunity@gmail.com" },
   { icon: MapPin, label: "Location", value: "Hargeisa, Somaliland", href: "#" },
 ];
 
@@ -140,13 +139,17 @@ export default function SiteFooter() {
             © {new Date().getFullYear()} SomOpportunity. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            {["Privacy Policy", "Terms of Service", "Cookie Policy"].map((t) => (
+            {[
+              { label: "Privacy Policy", href: "/privacy" },
+              { label: "Terms of Service", href: "/terms" },
+              { label: "Cookie Policy", href: "/privacy" },
+            ].map((t) => (
               <button
-                key={t}
-                onClick={() => navigate("#")}
+                key={t.label}
+                onClick={() => navigate(t.href)}
                 className="text-xs text-slate-400 hover:text-white transition-colors"
               >
-                {t}
+                {t.label}
               </button>
             ))}
           </div>
