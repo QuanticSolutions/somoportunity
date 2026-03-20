@@ -77,6 +77,8 @@ const App = () => (
             <Route path="/opportunities/:id" element={<OpportunityDetails />} />
             <Route path="/services/hire-talent" element={<HireTalent />} />
             <Route path="/services/technical-writing" element={<TechnicalWriting />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
 
             {/* Guest-only routes */}
             <Route path="/signup" element={<GuestRoute><SignUp /></GuestRoute>} />
