@@ -33,8 +33,7 @@ const socials = [
 ];
 
 const contacts = [
-  { icon: Mail, label: "Email", value: "info@somopportunity.com", href: "mailto:info@somopportunity.com" },
-  { icon: Mail, label: "Email", value: "Somopportunity@gmail.com", href: "mailto:Somopportunity@gmail.com" },
+  { icon: Mail, label: "Email", value: "somopportunity@gmail.com", href: "mailto:somopportunity@gmail.com" },
   { icon: MapPin, label: "Location", value: "Hargeisa, Somaliland", href: "#" },
 ];
 
