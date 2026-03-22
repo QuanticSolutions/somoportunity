@@ -59,6 +59,9 @@ import AdminSubmissions from "./pages/admin/AdminSubmissions";
 import AdminAnalytics from "./pages/admin/AdminAnalytics";
 import AdminSettings from "./pages/admin/AdminSettings";
 
+// Auth pages
+import AuthCallback from "./pages/Auth";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -88,6 +91,7 @@ const App = () => (
 
             {/* Auth required */}
             <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
+            <Route path="/auth/callback" element={<AuthCallback></AuthCallback>} />
 
             {/* Provider subscription flow */}
             <Route path="/provider/subscribe" element={<ProtectedRoute><SubscriptionSelect /></ProtectedRoute>} />
